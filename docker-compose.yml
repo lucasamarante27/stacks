@@ -1,0 +1,26 @@
+version: "3"
+services:
+  mariadb-cluster:
+    image: mariadb:10.7
+    container_name: mariadb-cluster
+    hostname: mariadb-cluster
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          memory: 5GB
+      placement:
+        constraints: [node.hostname == cluster-node01]
+    ports:
+      - "3306:3306"
+    volumes:
+      - /opt/storage/mariadb-cluster:/var/lib/mysql
+      - /opt/storage/mariadb-cluster/my.cnf:/etc/mysql/my.cnf
+    environment:
+      - MARIADB_ROOT_PASSWORD=98&xAE^U28
+      - MARIADB_USER=glpi
+      - MARIADB_PASSWORD=X2^bq1r06f
+      - MYSQL_INITDB_SKIP_TZINFO=yes
+      - MYSQL_DATABASE=my_database
+    restart: always
