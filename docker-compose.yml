@@ -1,26 +1,25 @@
-version: "3"
+version: '3'
+
 services:
-  mariadb-cluster:
-    image: mariadb:10.7
-    container_name: mariadb-cluster
-    hostname: mariadb-cluster
-    deploy:
-      mode: replicated
-      replicas: 1
-      resources:
-        limits:
-          memory: 5GB
-      placement:
-        constraints: [node.hostname == cluster-node01]
+  pagonlineteste:
+    #image: tomcat:9.0.84-jdk11-corretto
+    image: registry-docker.unimedjp.com.br/app-pag-online:latest
+    container_name: pagonlineteste
     ports:
-      - "3306:3306"
+      - 8090:8080
+    #deploy:
+    #  mode: replicated
+    #  replicas: 1
+    #  placement:
+    #    constraints: [node.hostname == cluster-docker-dmz01]
     volumes:
-      - /opt/storage/mariadb-cluster:/var/lib/mysql
-      - /opt/storage/mariadb-cluster/my.cnf:/etc/mysql/my.cnf
-    environment:
-      - MARIADB_ROOT_PASSWORD=98&xAE^U28
-      - MARIADB_USER=glpi
-      - MARIADB_PASSWORD=X2^bq1r06f
-      - MYSQL_INITDB_SKIP_TZINFO=yes
-      - MYSQL_DATABASE=my_database
+      #PARA NÃO UTILIZAR A IMAGEM DO GIT É NECESSÁRIO DESCOMENTAR E IMAGEM E .WAR ABAIXO##
+      #- /opt/storage/pagonline/pagonline.war:/usr/local/tomcat/webapps/pagonline.war
+      #- /opt/storage/pagonline/probe/probe.war:/usr/local/tomcat/webapps/probe.war
+      #- /opt/storage/pagonline/probe/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+      #- /opt/storage/pagonline/server.xml:/usr/local/tomcat/conf/server.xml
+      #- /opt/storage/pagonline/setenv.sh:/usr/local/tomcat/bin/setenv.sh
+      #- /opt/storage/pagonline/glowroot-agent:/usr/local/glowroot-agent/
+      #- /opt/storage/pagonline/ssl/unimedjp.javaks:/opt/ssl/unimedjp.javaks
+
     restart: always
